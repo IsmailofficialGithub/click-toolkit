@@ -83,6 +83,14 @@ Unreleased
   {func}`get_pager_file` picked for the output stream, and with
   `errors="replace"` to match the pipe backend. Any text stdout can encode
   reaches the pager.
+- The temporary file pager backend forwards any parameters the user set in
+  `PAGER` to the pager command instead of silently dropping them. On Windows,
+  `PAGER="less -R"` now invokes `less -R` on the temporary file rather than
+  bare `less`. {pr}`3777`
+- Improve raw mode detection by parsing the option tokens. {issue}`3416`
+  {pr}`3777`
+- {func}`edit` accepts `os.PathLike` values for `filename`, in addition to
+  strings. {issue}`2869` {pr}`3781`
 
 ## Version 8.4.2
 
