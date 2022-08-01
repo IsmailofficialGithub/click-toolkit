@@ -1,6 +1,6 @@
 ## Version 8.5.0
 
-Released 2026-08-24
+Unreleased
 
 - Add built-in shell completion support for PowerShell (Windows PowerShell
   5.1+ and pwsh 7+) alongside the existing `bash`, `zsh`, and `fish`
