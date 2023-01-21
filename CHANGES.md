@@ -1,7 +1,3 @@
-## Version 8.5.1
-
-Unreleased
-
 ## Version 8.5.0
 
 Released 2026-08-24
