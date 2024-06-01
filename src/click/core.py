@@ -1310,16 +1310,17 @@ class Command:
                 formatter.write_dl(opts)
 
     def format_arguments(self, ctx: Context, formatter: HelpFormatter) -> None:
-        """Writes the arguments that have a help record into the formatter."""
-        args = []
-        for param in self.get_params(ctx):
-            rv = param.get_help_record(ctx)
-            if rv is not None and isinstance(param, Argument):
-                args.append(rv)
+        """Writes all arguments into the formatter, if at least one is documented.
 
-        if args:
+        An argument with no help gets an empty description, the same way an option
+        with no help does. That keeps the section an exhaustive list of the
+        positional arguments, matching the usage line.
+        """
+        args = [param for param in self.get_params(ctx) if isinstance(param, Argument)]
+
+        if any(arg.help is not None for arg in args):
             with formatter.section(_("Positional arguments")):
-                formatter.write_dl(args)
+                formatter.write_dl([arg.get_help_record(ctx) for arg in args])
 
     def format_epilog(self, ctx: Context, formatter: HelpFormatter) -> None:
         """Writes the epilog into the formatter if it exists."""
@@ -2259,12 +2260,6 @@ class Parameter(ABC):
                         its deprecation in --help. The message can be customized
                         by using a string as the value. A deprecated parameter
                         cannot be required, a ValueError will be raised otherwise.
-    :param help: the help string. It is dedented and get a deprecated label if
-        appropriate.
-
-    .. versionchanged:: 8.5.1
-        New ``help`` parameter to replace the one from :class:`Option` and
-        :class:`Argument`.
 
     .. versionchanged:: 8.2.0
         Introduction of ``deprecated``.
@@ -2329,7 +2324,6 @@ class Parameter(ABC):
         t.Callable[[Context, Parameter, str], list[CompletionItem] | list[str]] | None
     )
     deprecated: bool | str
-    help: str | None
 
     def __init__(
         self,
@@ -2359,7 +2353,6 @@ class Parameter(ABC):
         ]
         | None = None,
         deprecated: bool | str = False,
-        help: str | None = None,
     ) -> None:
         self.name, self.opts, self.secondary_opts = self._parse_decls(
             param_decls or (), expose_value
@@ -2391,15 +2384,6 @@ class Parameter(ABC):
         self.envvar = envvar
         self._custom_shell_complete = shell_complete
         self.deprecated = deprecated
-
-        if help:
-            help = inspect.cleandoc(help)
-
-        if deprecated:
-            label = _format_deprecated_label(deprecated)
-            help = f"{help} {label}" if help else label
-
-        self.help = help
 
         if __debug__:
             if self.type.is_composite and nargs != self.type.arity:
@@ -2446,7 +2430,6 @@ class Parameter(ABC):
             "multiple": self.multiple,
             "default": self._hide_unset(self.default),
             "envvar": self.envvar,
-            "help": self.help,
         }
 
     def __repr__(self) -> str:
@@ -2989,6 +2972,7 @@ class Option(Parameter):
 
     count: bool
     allow_from_autoenv: bool
+    help: str | None
     show_default: bool | str | None
     show_choices: bool
     show_envvar: bool
@@ -3014,13 +2998,11 @@ class Option(Parameter):
         deprecated: bool | str = False,
         **attrs: t.Any,
     ) -> None:
+        if help:
+            help = inspect.cleandoc(help)
+
         super().__init__(
-            param_decls,
-            type=type,
-            multiple=multiple,
-            deprecated=deprecated,
-            help=help,
-            **attrs,
+            param_decls, type=type, multiple=multiple, deprecated=deprecated, **attrs
         )
 
         # Phase 1: prompt-related attributes. ``_infer_flag_kind`` reads ``self.prompt``
@@ -3034,6 +3016,10 @@ class Option(Parameter):
             prompt_text = None
         else:
             prompt_text = prompt
+
+        if deprecated:
+            label = _format_deprecated_label(deprecated)
+            help = f"{help} {label}" if help else label
 
         self.prompt = prompt_text
         self.confirmation_prompt = confirmation_prompt
@@ -3064,6 +3050,7 @@ class Option(Parameter):
             self.default = 0
 
         self.allow_from_autoenv = allow_from_autoenv
+        self.help = help
         self.show_default = show_default
         self.show_choices = show_choices
         self.show_envvar = show_envvar
@@ -3225,6 +3212,7 @@ class Option(Parameter):
         info_dict = super().to_info_dict()
         info_dict.update(
             default=self._hide_unset(self._resolve_lazy_default(self.default)),
+            help=self.help,
             prompt=self.prompt,
             is_flag=self.is_flag,
             flag_value=self.flag_activation_value,
@@ -3747,7 +3735,23 @@ class Argument(Parameter):
         if "multiple" in attrs:
             raise TypeError("__init__() got an unexpected keyword argument 'multiple'.")
 
-        super().__init__(param_decls, required=required, help=help, **attrs)
+        deprecated = attrs.get("deprecated", False)
+
+        if help:
+            help = inspect.cleandoc(help)
+
+        if deprecated:
+            label = _format_deprecated_label(deprecated)
+            help = f"{help} {label}" if help else label
+
+        self.help = help
+
+        super().__init__(param_decls, required=required, **attrs)
+
+    def to_info_dict(self) -> dict[str, t.Any]:
+        info_dict = super().to_info_dict()
+        info_dict.update(help=self.help)
+        return info_dict
 
     @property
     def human_readable_name(self) -> str:
@@ -3796,11 +3800,18 @@ class Argument(Parameter):
     def get_usage_pieces(self, ctx: Context) -> list[str]:
         return [self.make_metavar(ctx)]
 
-    def get_help_record(self, ctx: Context) -> tuple[str, str] | None:
-        if self.help is None:
-            return None
+    def get_help_record(self, ctx: Context) -> tuple[str, str]:
+        """Returns the argument's help row: its metavar and its help text.
 
-        return self.make_metavar(ctx), self.help
+        Unlike :meth:`Option.get_help_record`, this never returns ``None``. An
+        argument cannot be hidden, so an undocumented one still gets a row, with
+        an empty description.
+
+        .. versionchanged:: 8.5.1
+            Always returns a tuple. It used to return ``None`` when ``help`` was
+            not set.
+        """
+        return self.make_metavar(ctx), self.help or ""
 
     def get_error_hint(self, ctx: Context | None) -> str:
         if ctx is not None:
