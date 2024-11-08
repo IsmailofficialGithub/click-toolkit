@@ -2,6 +2,8 @@
 
 Unreleased
 
+- A parameter name that is not a valid Python identifier is deprecated and
+  raises `TypeError` in Click 9.0. {pr}`3827`
 - Fix `copy.deepcopy()` and `pickle` on a `Parameter`, `Option` or `Command`. {pr}`3805`
 - A `KeyboardInterrupt` arriving while `Command.main()` reports an abort or an error,
   or while it exits, no longer escapes as an unhandled traceback. The command still
@@ -16,9 +18,6 @@ Unreleased
 - {class}`Parameter` accepts a new `help` argument and {class}`Option` and {class}`Argument`
   inherits it. {meth}`Parameter.to_info_dict` now reports `help` for every kind of parameter.
   {pr}`3861`
-- A command's short help no longer stops at an abbreviation such as `vs.` or `e.g.`
-  inside the first sentence. A period ends the sentence only when it closes the text
-  or the next word does not start in lowercase. {pr}`3865`
 
 ## Version 8.5.0
 
