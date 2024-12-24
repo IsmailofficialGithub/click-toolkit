@@ -45,10 +45,8 @@ And from the command line:
 ```
 
 An argument may be assigned a {ref}`parameter type <parameter-types>`.
-If no type is provided, the type of the default value is used if it is
-recognized, otherwise {data}`STRING` is used. If no default value is
-provided, the type is assumed to be {data}`STRING`. See
-{ref}`type-inference` for the types that are recognized.
+If no type is provided, the type of the default value is used. If no
+default value is provided, the type is assumed to be {data}`STRING`.
 
 ```{admonition} Note on Required Arguments
 :class: note
