@@ -1489,7 +1489,7 @@ def test_string_show_default_in_prompt(
 ):
     """When show_default is a string, the prompt should display that
     string in parentheses instead of the actual default value,
-    matching the help text behavior. See IsmailofficialGithub/click-toolkit#2836."""
+    matching the help text behavior. See pallets/click#2836."""
 
     option_kwargs = {"show_default": show_default, "prompt": True}
     if default is not UNSET:
@@ -1618,8 +1618,8 @@ FLAG_VALUE_PROMPT_CASES = [
     ({"prompt": True, "default": True, "flag_value": True}, [], "[Y/n]", "n", False),
     # For boolean flags, default=True is a literal value, not a sentinel meaning
     # "activate flag", so the prompt shows [Y/n] with default=True. See:
-    # https://github.com/IsmailofficialGithub/click-toolkit/issues/3111
-    # https://github.com/IsmailofficialGithub/click-toolkit/pull/3239
+    # https://github.com/pallets/click/issues/3111
+    # https://github.com/pallets/click/pull/3239
     ({"prompt": True, "default": True, "flag_value": False}, [], "[Y/n]", "", True),
     ({"prompt": True, "default": True, "flag_value": False}, [], "[Y/n]", "y", True),
     ({"prompt": True, "default": True, "flag_value": False}, [], "[Y/n]", "n", False),
@@ -1682,7 +1682,7 @@ def test_flag_value_prompt(
     """Check how flag value are prompted and handled by all combinations of
     ``prompt``, ``default``, and ``flag_value`` parameters.
 
-    Covers concerns raised in issue https://github.com/IsmailofficialGithub/click-toolkit/issues/1992.
+    Covers concerns raised in issue https://github.com/pallets/click/issues/1992.
     """
 
     @click.command()
@@ -1929,7 +1929,7 @@ class _ApostropheReprType(click.ParamType):
 def test_hide_input_error_message(
     runner, type, user_input, expected_fragment, unexpected_fragment
 ):
-    """https://github.com/IsmailofficialGithub/click-toolkit/issues/2809"""
+    """https://github.com/pallets/click/issues/2809"""
 
     @click.command()
     @click.option("--password", prompt=True, hide_input=True, type=type)

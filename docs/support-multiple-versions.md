@@ -4,7 +4,7 @@ If you are a library maintainer, you may want to support multiple versions of
 Click. See the Pallets [version policy] for information about our version
 numbers and support policy.
 
-[version policy]: https://IsmailofficialGithubprojects.com/versions
+[version policy]: https://palletsprojects.com/versions
 
 Most features of Click are stable across releases, and don't require special
 handling. However, feature releases may deprecate and change APIs. Occasionally,

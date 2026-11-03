@@ -16,24 +16,24 @@ Installing into a virtual environment is highly recommended. We suggest {ref}`vi
 ## Examples
 
 Some standalone examples of Click applications are packaged with Click. They are available in the
-[examples folder](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples) of the repo.
+[examples folder](https://github.com/pallets/click/tree/main/examples) of the repo.
 
-- [inout](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/inout) : A very simple example of an application that can
+- [inout](https://github.com/pallets/click/tree/main/examples/inout) : A very simple example of an application that can
   read from files and write to files and also accept input from stdin or write to stdout.
-- [validation](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/validation) : A simple example of an application that
+- [validation](https://github.com/pallets/click/tree/main/examples/validation) : A simple example of an application that
   performs custom validation of parameters in different ways.
-- [naval](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/naval) : Port of the [docopt](http://docopt.org/) naval
+- [naval](https://github.com/pallets/click/tree/main/examples/naval) : Port of the [docopt](http://docopt.org/) naval
   example.
-- [colors](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/colors) : A simple example that colorizes text.
-- [aliases](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/aliases) : An advanced example that implements
+- [colors](https://github.com/pallets/click/tree/main/examples/colors) : A simple example that colorizes text.
+- [aliases](https://github.com/pallets/click/tree/main/examples/aliases) : An advanced example that implements
   {ref}`aliases`.
-- [imagepipe](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/imagepipe) : A complex example that implements some
+- [imagepipe](https://github.com/pallets/click/tree/main/examples/imagepipe) : A complex example that implements some
   {ref}`command-pipelines` . It chains together image processing instructions. Requires pillow.
-- [repo](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/repo) : An advanced example that implements a
+- [repo](https://github.com/pallets/click/tree/main/examples/repo) : An advanced example that implements a
   Git-/Mercurial-like command line interface.
-- [complex](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/complex) : A very advanced example that implements
+- [complex](https://github.com/pallets/click/tree/main/examples/complex) : A very advanced example that implements
   loading subcommands dynamically from a plugin folder.
-- [termui](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/termui) : A simple example that showcases terminal UI
+- [termui](https://github.com/pallets/click/tree/main/examples/termui) : A simple example that showcases terminal UI
   helpers provided by click.
 
 ## Basic Concepts - Creating a Command

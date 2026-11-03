@@ -105,12 +105,8 @@ def _echo_aborted() -> None:
     echo(_("Aborted!"), file=sys.stderr)
 
 
-def _outside_click_stacklevel(skip: cabc.Container[str] = ()) -> int:
+def _outside_click_stacklevel() -> int:
     """Depth of the first stack frame outside Click.
-
-    :param skip: Other module names to walk past. ``abc`` is one: it sits
-        between ``__init_subclass__`` and the ``class`` statement that the
-        warning must point at.
 
     .. versionadded:: 8.6.0
     """
@@ -120,7 +116,7 @@ def _outside_click_stacklevel(skip: cabc.Container[str] = ()) -> int:
     while frame is not None:
         module = frame.f_globals.get("__name__", "")
 
-        if module != "click" and not module.startswith("click.") and module not in skip:
+        if module != "click" and not module.startswith("click."):
             return level
 
         frame = frame.f_back
@@ -182,7 +178,7 @@ def iter_params_for_processing(
     order in which the user provided them to the CLI is respected.
 
     This behavior and its effect on callback evaluation is detailed at:
-    https://click.IsmailofficialGithubprojects.com/en/stable/advanced/#callback-evaluation-order
+    https://click.palletsprojects.com/en/stable/advanced/#callback-evaluation-order
     """
 
     def sort_key(item: Parameter) -> tuple[bool, float]:
@@ -539,7 +535,7 @@ class Context:
         # :attr:`params` had its ``default`` set explicitly by the user. Used
         # to tie-break feature-switch groups where multiple options share a
         # parameter name and both fall back to their default value.
-        # Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
+        # Refs: https://github.com/pallets/click/issues/3403
         self._param_default_explicit = {}
         self._exit_stack = ExitStack()
 
@@ -923,9 +919,9 @@ class Context:
                     # choose to make it an implementation detail. And because ``invoke``
                     # has been designed as part of Click public API, we return ``None``
                     # instead. Refs:
-                    # https://github.com/IsmailofficialGithub/click-toolkit/issues/3066
-                    # https://github.com/IsmailofficialGithub/click-toolkit/issues/3065
-                    # https://github.com/IsmailofficialGithub/click-toolkit/pull/3068
+                    # https://github.com/pallets/click/issues/3066
+                    # https://github.com/pallets/click/issues/3065
+                    # https://github.com/pallets/click/pull/3068
                     if default_value is UNSET:
                         default_value = None
                     kwargs[param.name] = param.type_cast_value(ctx, default_value)
@@ -1410,8 +1406,8 @@ class Command:
         # Waiting until after the initial parse to convert allows us to treat `UNSET`
         # more like a missing value when multiple params use the same name.
         # Refs:
-        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3071
-        # https://github.com/IsmailofficialGithub/click-toolkit/pull/3079
+        # https://github.com/pallets/click/issues/3071
+        # https://github.com/pallets/click/pull/3079
         for name, value in ctx.params.items():
             if value is UNSET:
                 ctx.params[name] = None
@@ -2246,17 +2242,6 @@ class Parameter(ABC):
 
     Some settings are supported by both options and arguments.
 
-    Three distinct strings designate a parameter, each with its own audience:
-
-    ``decls``
-        What the developer passes to the constructor as ``param_decls``.
-    ``spec``
-        What the user reads in ``--help`` and types on the command line. See
-        :attr:`spec` and :meth:`get_help_spec`.
-    ``name``
-        What Click uses internally to identify the parameter and to pass its
-        value to the command callback. See :attr:`name`.
-
     :param param_decls: the parameter declarations for this option or
                         argument.  This is a list of flags or argument
                         names.
@@ -2349,29 +2334,8 @@ class Parameter(ABC):
     param_type_name = "parameter"
 
     name: str
-    """What Click uses internally to identify the parameter, and the Python
-    argument name it passes to the command callback. Click derives it from the
-    declarations, lower cased and with dashes replaced by underscores. An
-    :class:`Option` takes the declaration with the longest prefix, so
-    ``"-t", "--times"`` names ``times``, while an :class:`Argument` takes its
-    single declaration.
-    """
     opts: list[str]
-    """Every command-line spelling that designates this parameter.
-
-    For an :class:`Option` these are the prefixed declarations the parser
-    matches, in declaration order: ``["-t", "--times"]``. :attr:`spec` is the
-    canonical one.
-
-    For an :class:`Argument` this holds the single declaration the developer
-    wrote, ``["filename"]``. The parser never reads it: it binds the value by
-    :attr:`name`. The string the user reads is :attr:`spec`, ``FILENAME``.
-    """
     secondary_opts: list[str]
-    """The spellings that set a boolean :class:`Option` to ``False``, taken from
-    the right side of a ``--color/--no-color`` declaration. Always empty for an
-    :class:`Argument`.
-    """
     # `Parameter.type` is annotated in `__init__` to avoid confusing mypy
     required: bool
     callback: t.Callable[[Context, Parameter, t.Any], t.Any] | None
@@ -2389,20 +2353,6 @@ class Parameter(ABC):
     deprecated: bool | str
     help: str | None
 
-    def __init_subclass__(cls, **kwargs: t.Any) -> None:
-        super().__init_subclass__(**kwargs)
-
-        if "human_readable_name" in cls.__dict__:
-            import warnings
-
-            warnings.warn(
-                f"{cls.__name__} overrides 'human_readable_name'. Click no"
-                " longer reads that property. Override 'spec' instead. Click"
-                " will remove 'human_readable_name' in 9.0.",
-                DeprecationWarning,
-                stacklevel=_outside_click_stacklevel(skip=("abc",)),
-            )
-
     def __init__(
         self,
         param_decls: cabc.Sequence[str] | None = None,
@@ -2414,7 +2364,7 @@ class Parameter(ABC):
         #   self.name, like flag options),
         # - and the actual value of the default.
         # It is confusing and is the source of many issues discussed in:
-        # https://github.com/IsmailofficialGithub/click-toolkit/pull/3030
+        # https://github.com/pallets/click/pull/3030
         # In the future, we might think of splitting it in two, not unlike
         # Option.is_flag and Option.flag_value: we could have something like
         # Parameter.is_default and Parameter.default_value.
@@ -2456,7 +2406,7 @@ class Parameter(ABC):
         # Captured before any auto-derived default (like ``False`` for boolean
         # flags in :class:`Option`) replaces the :data:`UNSET` sentinel, so it
         # remains ``False`` when the default was inferred rather than chosen.
-        # Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
+        # Refs: https://github.com/pallets/click/issues/3403
         self._default_explicit = default is not UNSET
         self.is_eager = is_eager
         self.metavar = metavar
@@ -2482,7 +2432,7 @@ class Parameter(ABC):
 
             if required and deprecated:
                 raise ValueError(
-                    f"The {self.param_type_name} '{self.spec}' "
+                    f"The {self.param_type_name} '{self.human_readable_name}' "
                     "is deprecated and still required. A deprecated "
                     f"{self.param_type_name} cannot be required."
                 )
@@ -2567,55 +2517,11 @@ class Parameter(ABC):
         )
 
     @property
-    def spec(self) -> str:
-        """Returns how the user spells this parameter on the command line.
-
-        This is the declaration with the longest prefix, so an option declared
-        as ``"-t", "--times"`` returns ``--times``. Click derives :attr:`name`
-        from that same declaration, unless the developer passed an explicit
-        name. A parameter without declarations returns its :attr:`name`.
-
-        .. versionadded:: 8.6.0
-        """
-        if not self.opts:
-            return self.name
-
-        return max(self.opts, key=lambda opt: len(_split_opt(opt)[0]))
-
-    @property
     def human_readable_name(self) -> str:
-        """Returns how the user spells this parameter on the command line.
-
-        .. deprecated:: 8.6.0
-            Will be removed in Click 9.0. Use :attr:`spec` instead. For an
-            option this returned the internal :attr:`name`, so the value
-            changes from ``times`` to ``--times``. Click no longer reads this
-            property, so an override in a subclass has no effect.
+        """Returns the human readable name of this parameter.  This is the
+        same as the name for options, but the metavar for arguments.
         """
-        import warnings
-
-        warnings.warn(
-            "'human_readable_name' is deprecated and will be removed in Click"
-            " 9.0. Use 'spec' instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return self.spec
-
-    def get_help_spec(self, ctx: Context) -> str:
-        """Returns the left column of this parameter's help record.
-
-        This implementation returns :attr:`spec`. :class:`Option` returns every
-        spelling, plus the metavar when the option takes a value.
-        :class:`Argument` returns its metavar, which already carries the markers
-        for an optional, repeated or deprecated value.
-
-        Unlike ``get_help_record()``, the spec is produced even when the
-        parameter is left out of the help page, like a hidden option.
-
-        .. versionadded:: 8.6.0
-        """
-        return self.spec
+        return self.name
 
     def make_metavar(self, ctx: Context) -> str:
         if self.metavar is not None:
@@ -2816,7 +2722,7 @@ class Parameter(ABC):
         # cases in which `UNSET` gets special treatment explicitly at this layer
         #
         # Refs:
-        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3069
+        # https://github.com/pallets/click/issues/3069
         if value is UNSET:
             if self.multiple or self.nargs == -1:
                 value = ()
@@ -2842,8 +2748,8 @@ class Parameter(ABC):
             # to hide UNSET values as None.
             #
             # Refs:
-            # https://github.com/IsmailofficialGithub/click-toolkit/issues/3136
-            # https://github.com/IsmailofficialGithub/click-toolkit/pull/3137
+            # https://github.com/pallets/click/issues/3136
+            # https://github.com/pallets/click/pull/3137
             else:
                 # Add another layer to the context stack to clearly hint that the
                 # context is temporarily modified.
@@ -2967,7 +2873,7 @@ class Parameter(ABC):
                     "{extra_message}"
                 ).format(
                     param_type=self.param_type_name,
-                    name=self.spec,
+                    name=self.human_readable_name,
                     extra_message=_format_deprecated_suffix(self.deprecated),
                 )
                 echo(style(message, fg="red"), err=True)
@@ -2984,7 +2890,7 @@ class Parameter(ABC):
                 value = UNSET
 
         # Arbitrate the slot when several parameters target the same variable
-        # name (feature-switch groups). See: https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
+        # name (feature-switch groups). See: https://github.com/pallets/click/issues/3403
         slot_empty = existing_value is UNSET
         more_explicit = existing_source is not None and source < existing_source
         same_source = existing_source is not None and source == existing_source
@@ -3027,7 +2933,7 @@ class Parameter(ABC):
         .. versionchanged:: 8.4.0
             ``ctx`` can be ``None``.
         """
-        hint_list = self.opts or [self.spec]
+        hint_list = self.opts or [self.human_readable_name]
         return " / ".join(f"'{x}'" for x in hint_list)
 
     def shell_complete(self, ctx: Context, incomplete: str) -> list[CompletionItem]:
@@ -3256,7 +3162,7 @@ class Option(Parameter):
         The parser uses it to decide whether to treat the next CLI token as the flag's
         value or as a new option. If ``prompt`` is enabled with
         ``prompt_required=False``, it opens the door for an interactive value, hence the
-        initial condition. Ref: https://github.com/IsmailofficialGithub/click-toolkit/issues/3084
+        initial condition. Ref: https://github.com/pallets/click/issues/3084
         """
         needs_value = self.prompt is not None and not self.prompt_required
 
@@ -3415,7 +3321,7 @@ class Option(Parameter):
         # unchanged. If the resolver substituted ``True`` -> :attr:`flag_value`, the
         # result is the programmer-supplied ``flag_value`` (often a class or enum),
         # which must NOT be instantiated here. See
-        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3121.
+        # https://github.com/pallets/click/issues/3121.
         if value is raw and call and callable(value):
             value = value()
         return value
@@ -3721,7 +3627,7 @@ class Option(Parameter):
             # default to the prompt, which is going to be a [y/n]-style confirmation
             # because the option is still a boolean flag. That way, instead of [y/n],
             # we get [Y/n] or [y/N] depending on the truthy value of the default.
-            # Refs: https://github.com/IsmailofficialGithub/click-toolkit/pull/3030#discussion_r2289180249
+            # Refs: https://github.com/pallets/click/pull/3030#discussion_r2289180249
             else:
                 default = bool(default)
             return confirm(self.prompt, default)
@@ -3878,7 +3784,7 @@ class Option(Parameter):
         # `value == UNSET` cases before `type_cast_value()` gets called.
         #
         # Refs:
-        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3069
+        # https://github.com/pallets/click/issues/3069
         if self.is_flag and not self.required and self.is_bool_flag and value is UNSET:
             value = False
 
@@ -3929,14 +3835,7 @@ class Argument(Parameter):
         super().__init__(param_decls, required=required, help=help, **attrs)
 
     @property
-    def spec(self) -> str:
-        """Returns the argument's metavar, which is how the user reads it in
-        ``--help``. An argument has no flag to spell, so this is the
-        :attr:`metavar` if one was given, and the uppercased :attr:`name`
-        otherwise.
-
-        .. versionadded:: 8.6.0
-        """
+    def human_readable_name(self) -> str:
         if self.metavar is not None:
             return self.metavar
         return self.name.upper()
@@ -3984,14 +3883,6 @@ class Argument(Parameter):
     def get_usage_pieces(self, ctx: Context) -> list[str]:
         return [self.make_metavar(ctx)]
 
-    def get_help_spec(self, ctx: Context) -> str:
-        """Returns the left column of the argument's help record: its metavar,
-        like ``FILENAME`` or ``[FILENAME]``.
-
-        .. versionadded:: 8.6.0
-        """
-        return self.make_metavar(ctx)
-
     def get_help_record(self, ctx: Context) -> tuple[str, str]:
         """Returns the argument's help row: its metavar and its help text.
 
@@ -4003,12 +3894,12 @@ class Argument(Parameter):
             Always returns a tuple. It used to return ``None`` when ``help`` was
             not set.
         """
-        return self.get_help_spec(ctx), self.help or ""
+        return self.make_metavar(ctx), self.help or ""
 
     def get_error_hint(self, ctx: Context | None) -> str:
         if ctx is not None:
-            return f"'{self.get_help_spec(ctx)}'"
-        return f"'{self.spec}'"
+            return f"'{self.make_metavar(ctx)}'"
+        return f"'{self.human_readable_name}'"
 
     def add_to_parser(self, parser: _OptionParser, ctx: Context) -> None:
         parser.add_argument(dest=self.name, nargs=self.nargs, obj=self)

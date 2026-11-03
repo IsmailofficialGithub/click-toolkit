@@ -129,4 +129,4 @@ It can be used like this:
         pass
 ```
 
-See the [alias example](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/aliases) in Click's repository for another example.
+See the [alias example](https://github.com/pallets/click/tree/main/examples/aliases) in Click's repository for another example.

@@ -244,7 +244,7 @@ to this, it can also launch the file manager and automatically select the provid
 Example usage:
 
 ```python
-click.launch("https://click.IsmailofficialGithubprojects.com/")
+click.launch("https://click.palletsprojects.com/")
 click.launch("/my/downloaded/file.txt", locate=True)
 ```
 

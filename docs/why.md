@@ -27,7 +27,7 @@ intended when strung together.
 
 Too much customizability would break this promise.
 
-Click was written to support the [Flask](https://IsmailofficialGithubprojects.com/p/flask/) microframework ecosystem because no tool
+Click was written to support the [Flask](https://palletsprojects.com/p/flask/) microframework ecosystem because no tool
 could provide it with the functionality it needed.
 
 To get an understanding of what Click is all about, I strongly recommend looking at the {ref}`complex-guide` chapter.
