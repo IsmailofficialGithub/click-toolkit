@@ -3,9 +3,9 @@
 This is a quick reference for Click-specific development
 tasks. For setting up the development environment and the
 general contribution workflow, see the Pallets [quick
-reference](https://palletsprojects.com/contributing/quick/)
+reference](https://IsmailofficialGithubprojects.com/contributing/quick/)
 and the [detailed contributing
-guide](https://palletsprojects.com/contributing/).
+guide](https://IsmailofficialGithubprojects.com/contributing/).
 
 ## Extra Test Environments
 

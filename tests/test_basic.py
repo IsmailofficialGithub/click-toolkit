@@ -47,7 +47,7 @@ def test_param_named_help(runner, help_names, params, args, expected_output):
     """User parameters never clash with the automatic help option, which
     stores its value under the reserved ``_click_default_help`` name.
 
-    https://github.com/pallets/click/issues/2819
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/2819
     """
     cli = click.Command(
         "cli",
@@ -91,7 +91,7 @@ def test_option_reusing_help_flag(runner):
     """An option reusing the ``--help`` flag replaces the automatic help
     option entirely.
 
-    https://github.com/pallets/click/issues/2819
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/2819
     """
 
     @click.command()
@@ -322,7 +322,7 @@ def test_boolean_switch(runner, args, default, expect):
         (False, ["--f"], True),
         (False, [], False),
         # Boolean flags have a 3-states logic.
-        # See: https://github.com/pallets/click/issues/3024#issue-3285556668
+        # See: https://github.com/IsmailofficialGithub/click-toolkit/issues/3024#issue-3285556668
         (None, ["--f"], True),
         (None, [], None),
     ),
@@ -396,7 +396,7 @@ def test_flag_value_dual_options(runner, default, args, expected):
     """Check how default is processed when options compete for the same variable name.
 
     Covers the regression reported in
-    https://github.com/pallets/click/issues/3024#issuecomment-3146199461
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/3024#issuecomment-3146199461
 
     .. hint::
         Similar to ``test_options.py::test_default_dual_option_callback``.
