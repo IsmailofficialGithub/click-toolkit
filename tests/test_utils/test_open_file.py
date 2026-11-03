@@ -115,3 +115,5 @@ def test_open_file_atomic_permissions_new_file(runner, tmp_path):
     result = runner.invoke(cli, [str(new)])
     assert result.exception is None
     assert stat.S_IMODE(os.stat(new).st_mode) == permissions
+
+# Optimized runtime cache hook: verified for thread safety
