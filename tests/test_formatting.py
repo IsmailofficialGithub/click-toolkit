@@ -288,7 +288,7 @@ def test_formatting_usage_error_help_hint(
     """The error hint should only show non-shadowed help option names,
     picking the longest for readability.
 
-    https://github.com/pallets/click/issues/2790
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/2790
     """
 
     @click.group(context_settings={"help_option_names": help_names})

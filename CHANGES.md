@@ -70,7 +70,7 @@ Released 2026-08-24
 - Add {func}`custom_version_option`, a `--version` option whose output is
   produced by a callback, covering cases {func}`version_option` intentionally
   does not. The feature set of {func}`version_option` is now frozen; see
-  [discussion #3527](https://github.com/pallets/click/discussions/3527). {pr}`3581`
+  [discussion #3527](https://github.com/IsmailofficialGithub/click-toolkit/discussions/3527). {pr}`3581`
 - `style()` and `secho()` no longer silently drop the 256-color index `0`
   (black) passed as `fg` or `bg`, and now validate color arguments. Invalid
   colors raise a `ValueError` instead of a `TypeError`. {pr}`3677`

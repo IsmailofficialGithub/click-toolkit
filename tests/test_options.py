@@ -266,7 +266,7 @@ def test_multiple_required(runner):
         (True, 1, [None, None], (None, None)),
         # Contrary to list or tuples, native Python types not supported by Click are
         # not recognized and are converted to the default format: tuple of strings.
-        # Refs: https://github.com/pallets/click/issues/3036
+        # Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
         (True, 1, {1, 2}, ("1", "2")),
         (True, 1, frozenset([1, 2]), ("1", "2")),
         (True, 1, {1: "a", 2: "b"}, ("1", "2")),
@@ -489,7 +489,7 @@ def test_multiple_envvar(runner):
 def test_envvar_container_type(runner):
     """Env vars are plain strings, so a container type splits them character-wise.
 
-    Refs: https://github.com/pallets/click/issues/3036
+    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
     """
 
     @click.command()
@@ -669,7 +669,7 @@ def test_show_default_default_map(runner):
 def test_show_default_container_defaults(runner):
     """Container defaults are rendered through ``str()`` in the help output.
 
-    Refs: https://github.com/pallets/click/issues/3036
+    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
     """
 
     @click.command()
@@ -721,7 +721,7 @@ def test_type_from_default_container(default):
     The documented "if no type is provided, the type of the default value is
     used" rule does not apply to ``set``, ``frozenset`` or ``dict`` defaults.
 
-    Refs: https://github.com/pallets/click/issues/3036
+    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
     """
     opt = click.Option(["-a"], default=default)
     assert opt.type is click.STRING
@@ -849,7 +849,7 @@ def test_toupper_envvar_prefix(runner):
 # ``os.environ`` and ``Parameter.resolve_envvar_value`` reads it back the same
 # way, so on Windows a variable answers to every spelling of its name and
 # elsewhere to exactly one. Both halves are asserted rather than skipped: the
-# difference is the behaviour being pinned. See pallets/click#2483.
+# difference is the behaviour being pinned. See IsmailofficialGithub/click-toolkit#2483.
 ENV_NAMES_ARE_CASE_INSENSITIVE = sys.platform == "win32"
 
 
@@ -1683,7 +1683,7 @@ def test_show_default_with_empty_string(runner, default, expected):
     """The empty-string check in help rendering must not break on objects
     whose ``__eq__`` raises for string operands.
 
-    Regression test for https://github.com/pallets/click/issues/3298.
+    Regression test for https://github.com/IsmailofficialGithub/click-toolkit/issues/3298.
     """
     opt = click.Option(["--limit"], default=default, show_default=True)
     ctx = click.Context(click.Command("cli"))
@@ -1868,8 +1868,8 @@ def test_type_from_flag_value():
         # Not passing --foo returns the default value as-is, in its Python type, then
         # converted by the option type. For boolean flags, default=True is a literal
         # value, not a sentinel meaning "activate flag". So it is NOT substituted with
-        # flag_value. See: https://github.com/pallets/click/issues/3111
-        # https://github.com/pallets/click/pull/3239
+        # flag_value. See: https://github.com/IsmailofficialGithub/click-toolkit/issues/3111
+        # https://github.com/IsmailofficialGithub/click-toolkit/pull/3239
         ({"type": bool, "default": True, "flag_value": True}, [], True),
         ({"type": bool, "default": True, "flag_value": False}, [], True),
         ({"type": bool, "default": False, "flag_value": True}, [], False),
@@ -1979,7 +1979,7 @@ def test_default_dual_option_callback(runner, default, args, expected):
     variable name.
 
     Reproduction of the issue reported in
-    https://github.com/pallets/click/pull/3030#discussion_r2271571819
+    https://github.com/IsmailofficialGithub/click-toolkit/pull/3030#discussion_r2271571819
 
     .. hint::
         Similar to ``test_basic.py::test_flag_value_dual_options``.
@@ -2265,7 +2265,7 @@ def test_choice_usage_rendering(runner, choices, metavar):
         (["foo", 1], "foo", "foo"),
         (["foo", 1], 1, "1"),
         # Enum choices are rendered as their names, not values.
-        # See: https://github.com/pallets/click/issues/2911
+        # See: https://github.com/IsmailofficialGithub/click-toolkit/issues/2911
         (HashType, HashType.SHA1, "SHA1"),
         # Enum choices allow defaults strings that are their names.
         (HashType, HashType.SHA256, "SHA256"),
@@ -2339,8 +2339,8 @@ class EnumSentinel(enum.Enum):
         internal implementation.
 
         Falsy sentinels have been discussed in:
-        https://github.com/pallets/click/pull/3030#pullrequestreview-3106604795
-        https://github.com/pallets/click/pull/3030#pullrequestreview-3108471552
+        https://github.com/IsmailofficialGithub/click-toolkit/pull/3030#pullrequestreview-3106604795
+        https://github.com/IsmailofficialGithub/click-toolkit/pull/3030#pullrequestreview-3108471552
         """
         return False
 
@@ -2417,7 +2417,7 @@ def test_dual_options_custom_type_sentinel_flag_value(runner, sentinel, args, ex
     name.
 
     A reproduction of
-    https://github.com/pallets/click/issues/3024#issuecomment-3146511356
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/3024#issuecomment-3146511356
     """
 
     class ConfigParamType(click.ParamType):
@@ -2555,8 +2555,8 @@ def test_custom_type_flag_value_standalone_option(runner, opt_params, args, expe
     """Test how the type and flag_value influence the returned value.
 
     Cover cases reported in:
-    https://github.com/pallets/click/issues/3024#issuecomment-3146480714
-    https://github.com/pallets/click/issues/2012#issuecomment-892437060
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/3024#issuecomment-3146480714
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/2012#issuecomment-892437060
     """
 
     @click.command()
@@ -2597,8 +2597,8 @@ def test_custom_type_flag_value_standalone_option(runner, opt_params, args, expe
         ),
         # Exotic flag values like classes are passed through unchanged when no
         # explicit type is given (UNPROCESSED is auto-detected).
-        # https://github.com/pallets/click/issues/2012
-        # https://github.com/pallets/click/issues/3121
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/2012
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3121
         (
             {"flag_value": Class1, "default": True},
             {"flag_value": Class2},
@@ -2621,7 +2621,7 @@ def test_custom_type_flag_value_standalone_option(runner, opt_params, args, expe
         ({"flag_value": Class1, "default": "True"}, {"flag_value": Class2}, [], "True"),
         ({"flag_value": Class1, "default": None}, {"flag_value": Class2}, [], None),
         # To get the classes as-is, we need to specify the type as UNPROCESSED.
-        # https://github.com/pallets/click/issues/3121
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3121
         (
             {"flag_value": Class1, "type": UNPROCESSED, "default": True},
             {"flag_value": Class2, "type": UNPROCESSED},
@@ -2689,9 +2689,9 @@ def test_custom_type_flag_value_dual_options(
     variable name.
 
     Reproduce issues reported in:
-    https://github.com/pallets/click/issues/3024#issuecomment-3146508536
-    https://github.com/pallets/click/issues/2012#issue-946471049
-    https://github.com/pallets/click/issues/2012#issuecomment-892437060
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/3024#issuecomment-3146508536
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/2012#issue-946471049
+    https://github.com/IsmailofficialGithub/click-toolkit/issues/2012#issuecomment-892437060
     """
 
     @click.command()
@@ -2712,7 +2712,7 @@ def test_custom_type_flag_value_dual_options(
     [
         # Class flag_value with default=True and UNPROCESSED: the class itself is
         # returned, NOT an instance. Regression test for
-        # https://github.com/pallets/click/issues/3121
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3121
         ({"flag_value": Class1, "type": UNPROCESSED, "default": True}, [], Class1),
         (
             {"flag_value": Class1, "type": UNPROCESSED, "default": True},
@@ -2748,7 +2748,7 @@ def test_custom_type_flag_value_dual_options(
 def test_callable_flag_value_not_instantiated(runner, opt_params, args, expected):
     """A callable ``flag_value`` like a class, with ``default=True`` should not be
     invoked when resolving the default. This is the single-option variant of
-    the regression reported in https://github.com/pallets/click/issues/3121.
+    the regression reported in https://github.com/IsmailofficialGithub/click-toolkit/issues/3121.
     """
 
     @click.command()
@@ -2875,7 +2875,7 @@ def test_flag_value_not_stringified_for_custom_types(runner):
     """Non-basic flag_value types are passed through unchanged without
     requiring ``type=click.UNPROCESSED``.
 
-    Regression test for https://github.com/pallets/click/issues/2012
+    Regression test for https://github.com/IsmailofficialGithub/click-toolkit/issues/2012
     """
 
     @click.command()
@@ -2933,7 +2933,7 @@ def test_custom_type_container_flag_value(
     """Check that container types are correctly handled as a type, a flag value
     and a default.
 
-    Reproduces https://github.com/pallets/click/issues/2610
+    Reproduces https://github.com/IsmailofficialGithub/click-toolkit/issues/2610
     """
 
     @click.command()
@@ -2961,12 +2961,12 @@ def test_custom_type_container_flag_value(
     ("default", "args", "expected"),
     [
         # default=None: 3-state pattern (e.g. Flask --reload/--no-reload).
-        # https://github.com/pallets/click/issues/3024
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3024
         (None, [], None),
         (None, ["--flag"], True),
         (None, ["--no-flag"], False),
         # default=True: literal value, not substituted with flag_value.
-        # https://github.com/pallets/click/issues/3111
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3111
         (True, [], True),
         (True, ["--flag"], True),
         (True, ["--no-flag"], False),
@@ -2994,7 +2994,7 @@ def test_bool_flag_pair_default(runner, default, args, expected):
     [
         # #3403 reproducer: enable/disable pair with explicit ``default=True``
         # on the positive flag, declared after (inner decorator) the negative.
-        # https://github.com/pallets/click/issues/3403
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
         pytest.param(
             [
                 ("--without-xyz", {"flag_value": False}),
@@ -3229,7 +3229,7 @@ def test_bool_flag_group_competition(runner, opts, args, expected):
     Verifies the arbitration rules between options that target the same
     variable name in a feature-switch group.
 
-    Regression test for https://github.com/pallets/click/issues/3403
+    Regression test for https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
     """
 
     @click.command()
@@ -3306,7 +3306,7 @@ def test_bool_flag_group_competition_with_default_map(
 @pytest.mark.parametrize(
     ("opts", "args", "invoke_kwargs", "expected_value", "expected_source"),
     [
-        # https://github.com/pallets/click/issues/3458
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3458
         pytest.param(
             [
                 ("--without-xyz", {"flag_value": False}),
@@ -3347,7 +3347,7 @@ def test_bool_flag_group_parameter_source(
 ):
     """``get_parameter_source()`` stays correct for feature-switch groups.
 
-    Regression test for https://github.com/pallets/click/issues/3458.
+    Regression test for https://github.com/IsmailofficialGithub/click-toolkit/issues/3458.
     """
 
     @click.command()
@@ -3917,7 +3917,7 @@ def test_flag_value_on_option_with_zero_or_one_args(flag_type, args, expect_outp
     """An option with flag_value and is_flag=False can be
     omitted or used with 0 or 1 args.
 
-    Regression test for https://github.com/pallets/click/issues/3084
+    Regression test for https://github.com/IsmailofficialGithub/click-toolkit/issues/3084
     """
     if flag_type is str:
         flagopt = click.option(

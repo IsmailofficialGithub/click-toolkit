@@ -1,4 +1,4 @@
-"""The simple example from https://github.com/pallets/click#a-simple-example."""
+"""The simple example from https://github.com/IsmailofficialGithub/click-toolkit#a-simple-example."""
 
 from typing_extensions import assert_type
 

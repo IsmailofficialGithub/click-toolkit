@@ -448,7 +448,7 @@ def version_option(
         :func:`custom_version_option` to render the output yourself.
 
         Rationale: `discussion #3527
-        <https://github.com/pallets/click/discussions/3527>`_.
+        <https://github.com/IsmailofficialGithub/click-toolkit/discussions/3527>`_.
 
     :param version: The version number to show. If not provided, Click
         will try to detect it.

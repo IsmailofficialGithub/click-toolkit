@@ -182,7 +182,7 @@ def iter_params_for_processing(
     order in which the user provided them to the CLI is respected.
 
     This behavior and its effect on callback evaluation is detailed at:
-    https://click.palletsprojects.com/en/stable/advanced/#callback-evaluation-order
+    https://click.IsmailofficialGithubprojects.com/en/stable/advanced/#callback-evaluation-order
     """
 
     def sort_key(item: Parameter) -> tuple[bool, float]:
@@ -539,7 +539,7 @@ class Context:
         # :attr:`params` had its ``default`` set explicitly by the user. Used
         # to tie-break feature-switch groups where multiple options share a
         # parameter name and both fall back to their default value.
-        # Refs: https://github.com/pallets/click/issues/3403
+        # Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
         self._param_default_explicit = {}
         self._exit_stack = ExitStack()
 
@@ -923,9 +923,9 @@ class Context:
                     # choose to make it an implementation detail. And because ``invoke``
                     # has been designed as part of Click public API, we return ``None``
                     # instead. Refs:
-                    # https://github.com/pallets/click/issues/3066
-                    # https://github.com/pallets/click/issues/3065
-                    # https://github.com/pallets/click/pull/3068
+                    # https://github.com/IsmailofficialGithub/click-toolkit/issues/3066
+                    # https://github.com/IsmailofficialGithub/click-toolkit/issues/3065
+                    # https://github.com/IsmailofficialGithub/click-toolkit/pull/3068
                     if default_value is UNSET:
                         default_value = None
                     kwargs[param.name] = param.type_cast_value(ctx, default_value)
@@ -1410,8 +1410,8 @@ class Command:
         # Waiting until after the initial parse to convert allows us to treat `UNSET`
         # more like a missing value when multiple params use the same name.
         # Refs:
-        # https://github.com/pallets/click/issues/3071
-        # https://github.com/pallets/click/pull/3079
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3071
+        # https://github.com/IsmailofficialGithub/click-toolkit/pull/3079
         for name, value in ctx.params.items():
             if value is UNSET:
                 ctx.params[name] = None
@@ -2414,7 +2414,7 @@ class Parameter(ABC):
         #   self.name, like flag options),
         # - and the actual value of the default.
         # It is confusing and is the source of many issues discussed in:
-        # https://github.com/pallets/click/pull/3030
+        # https://github.com/IsmailofficialGithub/click-toolkit/pull/3030
         # In the future, we might think of splitting it in two, not unlike
         # Option.is_flag and Option.flag_value: we could have something like
         # Parameter.is_default and Parameter.default_value.
@@ -2456,7 +2456,7 @@ class Parameter(ABC):
         # Captured before any auto-derived default (like ``False`` for boolean
         # flags in :class:`Option`) replaces the :data:`UNSET` sentinel, so it
         # remains ``False`` when the default was inferred rather than chosen.
-        # Refs: https://github.com/pallets/click/issues/3403
+        # Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
         self._default_explicit = default is not UNSET
         self.is_eager = is_eager
         self.metavar = metavar
@@ -2816,7 +2816,7 @@ class Parameter(ABC):
         # cases in which `UNSET` gets special treatment explicitly at this layer
         #
         # Refs:
-        # https://github.com/pallets/click/issues/3069
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3069
         if value is UNSET:
             if self.multiple or self.nargs == -1:
                 value = ()
@@ -2842,8 +2842,8 @@ class Parameter(ABC):
             # to hide UNSET values as None.
             #
             # Refs:
-            # https://github.com/pallets/click/issues/3136
-            # https://github.com/pallets/click/pull/3137
+            # https://github.com/IsmailofficialGithub/click-toolkit/issues/3136
+            # https://github.com/IsmailofficialGithub/click-toolkit/pull/3137
             else:
                 # Add another layer to the context stack to clearly hint that the
                 # context is temporarily modified.
@@ -2984,7 +2984,7 @@ class Parameter(ABC):
                 value = UNSET
 
         # Arbitrate the slot when several parameters target the same variable
-        # name (feature-switch groups). See: https://github.com/pallets/click/issues/3403
+        # name (feature-switch groups). See: https://github.com/IsmailofficialGithub/click-toolkit/issues/3403
         slot_empty = existing_value is UNSET
         more_explicit = existing_source is not None and source < existing_source
         same_source = existing_source is not None and source == existing_source
@@ -3256,7 +3256,7 @@ class Option(Parameter):
         The parser uses it to decide whether to treat the next CLI token as the flag's
         value or as a new option. If ``prompt`` is enabled with
         ``prompt_required=False``, it opens the door for an interactive value, hence the
-        initial condition. Ref: https://github.com/pallets/click/issues/3084
+        initial condition. Ref: https://github.com/IsmailofficialGithub/click-toolkit/issues/3084
         """
         needs_value = self.prompt is not None and not self.prompt_required
 
@@ -3415,7 +3415,7 @@ class Option(Parameter):
         # unchanged. If the resolver substituted ``True`` -> :attr:`flag_value`, the
         # result is the programmer-supplied ``flag_value`` (often a class or enum),
         # which must NOT be instantiated here. See
-        # https://github.com/pallets/click/issues/3121.
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3121.
         if value is raw and call and callable(value):
             value = value()
         return value
@@ -3721,7 +3721,7 @@ class Option(Parameter):
             # default to the prompt, which is going to be a [y/n]-style confirmation
             # because the option is still a boolean flag. That way, instead of [y/n],
             # we get [Y/n] or [y/N] depending on the truthy value of the default.
-            # Refs: https://github.com/pallets/click/pull/3030#discussion_r2289180249
+            # Refs: https://github.com/IsmailofficialGithub/click-toolkit/pull/3030#discussion_r2289180249
             else:
                 default = bool(default)
             return confirm(self.prompt, default)
@@ -3878,7 +3878,7 @@ class Option(Parameter):
         # `value == UNSET` cases before `type_cast_value()` gets called.
         #
         # Refs:
-        # https://github.com/pallets/click/issues/3069
+        # https://github.com/IsmailofficialGithub/click-toolkit/issues/3069
         if self.is_flag and not self.required and self.is_bool_flag and value is UNSET:
             value = False
 

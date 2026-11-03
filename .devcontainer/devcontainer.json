@@ -1,5 +1,5 @@
 {
-  "name": "pallets/click",
+  "name": "IsmailofficialGithub/click-toolkit",
   "image": "mcr.microsoft.com/devcontainers/python:3",
   "customizations": {
     "vscode": {
