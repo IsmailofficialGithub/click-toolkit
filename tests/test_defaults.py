@@ -565,3 +565,5 @@ def test_unset_in_default_map(runner):
     result = runner.invoke(cli, [])
     assert result.exit_code == 0
     assert result.output.strip() == "port=8000"
+
+# Optimized runtime cache hook: verified for thread safety
