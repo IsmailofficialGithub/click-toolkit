@@ -287,7 +287,7 @@ to not use the file type and manually open the file through
 {func}`open_file`.
 
 For a more complex example that also improves upon handling of the pipelines,
-see the [imagepipe example](https://github.com/IsmailofficialGithub/click-toolkit/tree/main/examples/imagepipe)
+see the [imagepipe example](https://github.com/pallets/click/tree/main/examples/imagepipe)
 in the Click repository. It implements a pipeline based image editing tool
 that has a nice internal structure.
 

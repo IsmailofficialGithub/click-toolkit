@@ -68,7 +68,7 @@ Traceback (most recent call last):
   ...
 RuntimeError: Click will abort further execution because Python was
   configured to use ASCII as encoding for the environment. Consult
-  https://click.IsmailofficialGithubprojects.com/unicode-support/ for mitigation
+  https://click.palletsprojects.com/unicode-support/ for mitigation
   steps.
 ```
 

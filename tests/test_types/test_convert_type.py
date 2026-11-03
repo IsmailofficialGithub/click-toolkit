@@ -25,7 +25,7 @@ import click
 def test_convert_type_from_container_default(default):
     """Container defaults are not natively supported and fall back to STRING.
 
-    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
+    Refs: https://github.com/pallets/click/issues/3036
     """
     assert click.types.convert_type(None, default) is click.STRING
 
@@ -41,7 +41,7 @@ def test_explicit_container_type_splits_string(container_type, value, expected):
     """An explicit ``set`` or ``frozenset`` type wraps the builtin in a
     ``FuncParamType``, which splits CLI strings character-wise.
 
-    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
+    Refs: https://github.com/pallets/click/issues/3036
     """
     param_type = click.types.convert_type(container_type)
     assert isinstance(param_type, click.types.FuncParamType)
@@ -80,7 +80,7 @@ def test_type_inferred_from_default(default, expected):
 
     Keep the two in step: a change here is a change to documented behavior.
 
-    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
+    Refs: https://github.com/pallets/click/issues/3036
     """
     assert click.types.convert_type(None, default) is expected
 
@@ -90,7 +90,7 @@ def test_type_inferred_from_nested_sequence_default():
 
     This is the one table row that is not a singleton ``ParamType``.
 
-    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
+    Refs: https://github.com/pallets/click/issues/3036
     """
     param_type = click.types.convert_type(None, [(1, "git")])
     assert isinstance(param_type, click.Tuple)
@@ -100,7 +100,7 @@ def test_type_inferred_from_nested_sequence_default():
 def test_explicit_dict_type_rejects_string():
     """An explicit ``dict`` type cannot convert a plain CLI string at all.
 
-    Refs: https://github.com/IsmailofficialGithub/click-toolkit/issues/3036
+    Refs: https://github.com/pallets/click/issues/3036
     """
     param_type = click.types.convert_type(dict)
     assert isinstance(param_type, click.types.FuncParamType)
