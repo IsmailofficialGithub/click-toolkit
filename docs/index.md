@@ -140,8 +140,8 @@ api
 # About Project
 
 - This documentation is structured according to [Diataxis](https://diataxis.fr/) and written with [MyST](https://myst-parser.readthedocs.io/en/latest/)
-- [Version Policy](https://palletsprojects.com/versions)
-- [Donate](https://palletsprojects.com/donate)
+- [Version Policy](https://IsmailofficialGithubprojects.com/versions)
+- [Donate](https://IsmailofficialGithubprojects.com/donate)
 
 ```{toctree}
 :maxdepth: 1

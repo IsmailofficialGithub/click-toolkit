@@ -443,8 +443,8 @@ def _resolve_pager_command(cmd_parts: list[str]) -> tuple[Path, list[str]] | Non
     # Normalize to an absolute path without resolving symlinks: multi-call
     # binaries such as busybox derive their identity from the link they are
     # invoked through, so resolving less -> busybox makes them misbehave.
-    # See https://github.com/pallets/click/issues/2943 and
-    # https://github.com/pallets/click/pull/2944
+    # See https://github.com/IsmailofficialGithub/click-toolkit/issues/2943 and
+    # https://github.com/IsmailofficialGithub/click-toolkit/pull/2944
     return Path(cmd_filepath).absolute(), cmd_parts[1:]
 
 

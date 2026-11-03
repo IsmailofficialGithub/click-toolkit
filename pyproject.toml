@@ -5,7 +5,7 @@ description = "Composable command line interface toolkit"
 readme = "README.md"
 license = "BSD-3-Clause"
 license-files = ["LICENSE.txt"]
-maintainers = [{name = "Pallets", email = "contact@palletsprojects.com"}]
+maintainers = [{name = "Pallets", email = "contact@IsmailofficialGithubprojects.com"}]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -16,11 +16,11 @@ classifiers = [
 requires-python = ">=3.10"
 
 [project.urls]
-Donate = "https://palletsprojects.com/donate"
-Documentation = "https://click.palletsprojects.com/"
-Changes = "https://click.palletsprojects.com/page/changes/"
-Source = "https://github.com/pallets/click/"
-Chat = "https://discord.gg/pallets"
+Donate = "https://IsmailofficialGithubprojects.com/donate"
+Documentation = "https://click.IsmailofficialGithubprojects.com/"
+Changes = "https://click.IsmailofficialGithubprojects.com/page/changes/"
+Source = "https://github.com/IsmailofficialGithub/click-toolkit/"
+Chat = "https://discord.gg/IsmailofficialGithub"
 
 [dependency-groups]
 dev = [
@@ -30,7 +30,7 @@ dev = [
 ]
 docs = [
     "myst-parser",
-    "pallets-sphinx-themes",
+    "IsmailofficialGithub-sphinx-themes",
     "sphinx",
     "sphinx-tabs",
     "sphinxcontrib-log-cabinet",

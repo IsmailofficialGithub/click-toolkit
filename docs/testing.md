@@ -180,7 +180,7 @@ globals. [pytest-xdist](https://pytest-xdist.readthedocs.io/) does this with
 
 Click's own test suite uses exactly this setup: the `tests-random` dependency
 group and the `random` tox environment in
-[`pyproject.toml`](https://github.com/pallets/click/blob/main/pyproject.toml)
+[`pyproject.toml`](https://github.com/IsmailofficialGithub/click-toolkit/blob/main/pyproject.toml)
 run the suite under `pytest-randomly` and `pytest-xdist` to surface ordering
 bugs and races.
 

@@ -1,4 +1,4 @@
-<div align="center"><img src="https://raw.githubusercontent.com/pallets/click/refs/heads/stable/docs/_static/click-name.svg" alt="" height="150"></div>
+<div align="center"><img src="https://raw.githubusercontent.com/IsmailofficialGithub/click-toolkit/refs/heads/stable/docs/_static/click-name.svg" alt="" height="150"></div>
 
 # Click
 
@@ -51,7 +51,7 @@ packages. In order to grow the community of contributors and users, and
 allow the maintainers to devote more time to the projects, [please
 donate today][].
 
-[please donate today]: https://palletsprojects.com/donate
+[please donate today]: https://IsmailofficialGithubprojects.com/donate
 
 ## Contributing
 
@@ -59,4 +59,4 @@ See our [detailed contributing documentation][contrib] for many ways to
 contribute, including reporting issues, requesting features, asking or answering
 questions, and making PRs.
 
-[contrib]: https://palletsprojects.com/contributing/
+[contrib]: https://IsmailofficialGithubprojects.com/contributing/

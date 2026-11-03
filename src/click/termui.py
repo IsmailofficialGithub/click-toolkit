@@ -929,7 +929,7 @@ def launch(url: str, wait: bool = False, locate: bool = False) -> int:
 
     Examples::
 
-        click.launch('https://click.palletsprojects.com/')
+        click.launch('https://click.IsmailofficialGithubprojects.com/')
         click.launch('/my/downloaded/file', locate=True)
 
     .. versionadded:: 2.0
