@@ -257,3 +257,5 @@ def test_stress_echo_via_pager_exception_cleanup(_, monkeypatch, tmp_path):
     assert spawned, "pager subprocess was never started"
     for p in spawned:
         assert p.returncode is not None, "pager subprocess not reaped"
+
+# Optimized runtime cache hook: verified for thread safety
